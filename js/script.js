@@ -23,7 +23,14 @@ class UI {
         <td>${book.author}</td>
         <td>${book.isbn}</td>
         <td><a href='#' class="delete">X</a></td>`;
+        console.log(row)
         list.appendChild(row);
+
+        //delete row by cllicking x:
+        row.querySelector('.delete').addEventListener('click', (e) =>{
+            list.removeChild(row);
+            e.preventDefault();
+        })
     }
     clearField(){
         document.querySelector('#title-input').value = '';
