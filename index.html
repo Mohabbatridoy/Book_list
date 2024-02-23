@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css" integrity="sha512-EZLkOqwILORob+p0BXZc+Vm3RgJBOe1Iq/0fiI7r/wJgzOFZMlsqTa29UEl6v6U6gsV4uIpsNZoV32YZqrCRCQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="css/style.css">
+ 
 
     <title>Book List</title>
 
@@ -15,17 +16,17 @@
       <form id="book-form">
         <div>
           <label for="title" class="u-full-width">Title</label>
-          <input type="text" id="title-input" class="u-full-width">
+          <input type="text" id="title" class="u-full-width">
         </div>
 
         <div>
           <label for="author" class="u-full-width">Author</label>
-          <input type="text" id="author-input" class="u-full-width">
+          <input type="text" id="author" class="u-full-width">
         </div>
 
         <div>
           <label for="isbn" class="u-full-width">ISBN#</label>
-          <input type="text" id="isbn-input" class="u-full-width">
+          <input type="text" id="isbn" class="u-full-width">
         </div>
 
         <div>
@@ -34,7 +35,7 @@
         
       </form>
 
-      <table class="u-full-width" id="book-list">
+      <table class="u-full-width">
         <thead>
           <tr>
             <th>Title</th>
@@ -43,7 +44,7 @@
             <th></th>
           </tr>
         </thead>
-        <tbody id="table-body">
+        <tbody id="book-list">
 
         </tbody>
       </table>
