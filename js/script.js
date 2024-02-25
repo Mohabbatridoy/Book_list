@@ -13,16 +13,14 @@ class Book {
 
 //UI class
 class UI {
-    constructor (){
 
-    }
     static addToBookList(book){
         let list = document.querySelector('#book-list');
         let row = document.createElement('tr');
         row.innerHTML = `<td>${book.title}</td>
         <td>${book.author}</td>
         <td>${book.isbn}</td>
-        <td><a href='#' class'delete'>X</a></td>`;
+        <td><a href='#' class='delete'>X</a></td>`;
         list.appendChild(row);
     }
 
@@ -45,16 +43,20 @@ class UI {
         }, 3000);
     }
 
-    // static deleteFromBook(target){
-    //     if(target.hasAttribute('href')){
-    //         target.parentElement.parentElement.remove();
-    //         this.showAlert("Booked Removed",'success');
-    //     }
-    // }
+    static deleteFromBook(target){
+        if(target.hasAttribute('href')){
+            target.parentElement.parentElement.remove();
+
+            //call function to remove book from localstorage
+            Store.removeBook(target.parentElement.previousElementSibling.textContent.trim());
+
+            this.showAlert("Book Removed",'success');
+        }
+    }
 }
 
 //Local storage class
-class store{
+class Store{
     static getBooks() {
         let books;
         if(localStorage.getItem('books') === null){
@@ -66,17 +68,40 @@ class store{
         return books;
     }
 
-    addToLocalStorage(book){
-        let books = this.getBooks();
+    static addToLocalStorage(book){
+        let books = Store.getBooks();
         books.push(book);
 
         localStorage.setItem('books', JSON.stringify(books));
+    }
+
+    static displayBook(){
+        let books = Store.getBooks();
+
+        books.forEach(book =>{
+            UI.addToBookList(book);
+        })
+
+        // e.preventDefault();
+    }
+
+    static removeBook(isbn){
+        let books = Store.getBooks();
+        books.forEach((book, index) =>{
+            if (book.isbn === isbn){
+                books.splice(index,1);
+            }
+        })
+
+        localStorage.setItem('books',JSON
+        .stringify(books));
     }
 }
 
 //add eventlistner:
 form.addEventListener('submit', newBook);
 bookList.addEventListener('click', removeBook);
+document.addEventListener('DOMContentLoaded',Store.displayBook());
 
 //Functions:
 //addBook function:
@@ -91,9 +116,10 @@ function newBook (e){
     else{
         let book = new Book(title, author, isbn);
         UI.addToBookList(book);
-        store.addToLocalStorage(book);
         UI.clearField();
         UI.showAlert("Book added!","success");
+        Store.addToLocalStorage(book);
+
     }
     
 
@@ -101,12 +127,13 @@ function newBook (e){
 }
 
 function removeBook(e){
-    // UI.deleteFromBook(e.target);
-    let tr = e.target;
-    if(tr.hasAttribute('href')){
-        tr.parentElement.parentElement.remove();
-        UI.showAlert("Booked Removed",'success');
-    }
+    UI.deleteFromBook(e.target);
+
+    // let tr = e.target;
+    // if(tr.hasAttribute('href')){
+    //     tr.parentElement.parentElement.remove();
+    //     UI.showAlert("Book Removed",'success');
+    // }
 
     e.preventDefault();
 }
